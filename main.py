@@ -3,6 +3,11 @@ import sqlite3
 import getpass
 import crud
 
+# TERMINAL BASED BlogSite with all the basic 
+# CRUD facilities
+
+# Author : PranavKrishnaS
+
 # SQL FILE NAME
 DB_FILE = "data.db"
 
