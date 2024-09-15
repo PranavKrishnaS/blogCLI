@@ -1,4 +1,4 @@
-# blogCLI - 
+# blogCLI 
 blogCLI is a simple, command-line based blogsite.
 
 It features secure user data storage with password encryption, and do all of the CRUD [Create, Read, Update, Delete] functionalities
