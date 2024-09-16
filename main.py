@@ -18,7 +18,7 @@ def main_menu(user_id):
     while True:
         print("\n--- Blog Menu ---")
         print("1. Create a new blog post")
-        print("2. View your blog posts")
+        print("2. View blog posts")
         print("3. Modify an existing blog post")
         print("4. Delete a blog post")
         print("5. Logout")

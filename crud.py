@@ -1,10 +1,12 @@
 import sqlite3
 import getpass
 import bcrypt
+
 DB_FILE = "data.db"
 
 # user login / registration
 def register():
+    
     # Register new user with encrypted password
     conn = sqlite3.connect(DB_FILE)
     c = conn.cursor()
@@ -18,9 +20,11 @@ def register():
         conn.close()
         return
     
+    # Receive password securely
     password = getpass.getpass("Enter password: ").encode('utf-8')
     confirm_password = getpass.getpass("Confirm password: ").encode('utf-8')
     
+    # Password validation
     if password != confirm_password:
         print("Passwords do not match. Try again.")
         conn.close()
@@ -38,7 +42,7 @@ def register():
 
 def login():
 
-    """Authenticate the user with username and password."""
+    # Authenticate the user with username and password.
     conn = sqlite3.connect(DB_FILE)
     c = conn.cursor()
     
@@ -55,20 +59,24 @@ def login():
         return None
     
     # Validate password
-    stored_password = user[2].encode('utf-8')  # User table: id, username, password
+
+    stored_password = user[2].encode('utf-8')  
+    # User table: id, username, password
+
     if bcrypt.checkpw(password, stored_password):
         print(f"Logged in as {username}")
         conn.close()
-        return user[0]  # Return user ID on successful login
+        return user[0]  # Return user ID to main.py
     else:
         print("Incorrect password.")
         conn.close()
         return None
 
 # Blog CRUD
+
 # Create new blog
 def createBlog(user_id):
-    """Create a new blog post for the logged-in user."""
+    # Create a new blog post for the logged-in user.
     conn = sqlite3.connect(DB_FILE)
     c = conn.cursor()
     
@@ -83,11 +91,16 @@ def createBlog(user_id):
 
 # View all blogs
 def viewBlogs(user_id):
-    """View all blog posts created by the logged-in user."""
+    # View all blog posts created by the logged-in user.
     conn = sqlite3.connect(DB_FILE)
     c = conn.cursor()
     
-    c.execute("SELECT * FROM blogs ")
+    userid = input("Enter id of the blog author. HIT [ENTER] to see all blogs : ")
+    if userid == '':
+        c.execute("SELECT * FROM blogs ")
+    else:
+        c.execute('SELECT * FROM blogs WHERE id = ?', (userid,))
+
     blogs = c.fetchall()
     
     if not blogs:
@@ -101,13 +114,13 @@ def viewBlogs(user_id):
 
 # Modify your own blog
 def modifyBlog(user_id):
-    """Modify an existing blog post created by the logged-in user."""
+    
     conn = sqlite3.connect(DB_FILE)
     c = conn.cursor()
     
     blog_id = int(input("Enter the Blog ID to modify: "))
     
-    # Check if the blog belongs to the user
+    # Check if the blog belongs to the user.
     c.execute("SELECT * FROM blogs WHERE id = ? AND user_id = ?", (blog_id, user_id))
     blog = c.fetchone()
     
@@ -117,10 +130,20 @@ def modifyBlog(user_id):
         return
     
     # Update blog title and content
-    new_title = input("Enter new title: ").strip()
-    new_content = input("Enter new content: ").strip()
+    new_title = input("Enter new title. Hit [ENTER] without typing to not make changes : ").strip()
+    new_content = input("Enter new content. Hit [ENTER] without typing to not make changes : ").strip()
     
-    c.execute("UPDATE blogs SET title = ?, content = ? WHERE id = ?", (new_title, new_content, blog_id))
+    # Check user input for title and content
+    if new_content == '':
+        pass
+    else:
+        c.execute("UPDATE blogs SET content = ? WHERE id = ?", (new_content, blog_id))
+
+    if new_title == '':
+        pass
+    else:
+        c.execute("UPDATE blogs SET title = ? WHERE id = ?", (new_title, blog_id))
+
     conn.commit()
     conn.close()
     
@@ -131,7 +154,6 @@ def deleteBlog(user_id):
     
     conn = sqlite3.connect(DB_FILE)
     c = conn.cursor()
-    
     blog_id = int(input("Enter the Blog ID to delete: "))
     
     # Check if the blog belongs to the user

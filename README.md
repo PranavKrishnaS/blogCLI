@@ -12,13 +12,17 @@ It features secure user data storage with password encryption, and do all of the
 
 2. `crud.py` : Contains code for all `CREATE`,`READ`,`UPDATE` and `DELETE` functions needed for the database.
 
-3. `.venv` : Python virtual environment for running code in systems without `Python` preinstalled.
+3. `.venv` : Python virtual environment for running code in systems without `Python` preinstalled. [REMOVED]
 
 4. `data.db` : Database where all user and blog related data are stored. Has 2 tables `uesrs` and `blogs`
 
 5. `main.py` : The main file of `blogCLI`. Run `setup.py` atleast once before running this file.
 
-# Used libraries
-- `bcrypt` for password encryption
-- `sqlite3` for database management and operations
-- `getpass` for secure password input
+`NOTE` : To ensure ease of understanding and reducing complexity, all data manipulating operations are done from `crud.py`. `main.py` is only responsible for calling necessary functions. 
+
+
+
+# Prerequisites
+- `bcrypt` for password encryption - (pip install bcrypt)
+- `sqlite3` for database management and operations (installed in Python by default)
+- `getpass` for secure password input (installed in Python by default)
