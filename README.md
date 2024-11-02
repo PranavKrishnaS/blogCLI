@@ -8,7 +8,7 @@ It features secure user data storage with password encryption, and do all of the
 - then run `main.py`
 
 ## Files 
-1️⃣. `setup.py` : Contains code for setting up database and creating tables. By default, it generates a `data.db` in the same folder level as `setup.py`
+1. `setup.py` : Contains code for setting up database and creating tables. By default, it generates a `data.db` in the same folder level as `setup.py`
 
 2. `crud.py` : Contains code for all `CREATE`,`READ`,`UPDATE` and `DELETE` functions needed for the database.
 
